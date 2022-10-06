@@ -19,7 +19,8 @@ class CityFactory extends Factory
         $resultado=$ciudades[$this->faker->numberBetween(0,$length-1)];
         return [
             'name' =>  $resultado,
-            'description' =>  $this->faker->words(3),
+            'description' => $this->faker->paragraph(2),
+            'address'=>$this->faker->address()
         ];
     }
 }

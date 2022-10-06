@@ -11,6 +11,8 @@ class Plan extends Model
 {
     use HasFactory;
 
+    protected $fillable=['name'];
+
     public function specialities()
     {
         return $this->belongsToMany(Speciality::class);

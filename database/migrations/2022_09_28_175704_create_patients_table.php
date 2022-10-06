@@ -16,10 +16,11 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('document');
             $table->integer('age');
             $table->string('address')->nullable();
             $table->integer('phone_number');
-            $table->foreignId('plan_id')->constrained('plan');
+            $table->foreignId('plan_id')->constrained('plans');
             $table->timestamps();
         });
     }

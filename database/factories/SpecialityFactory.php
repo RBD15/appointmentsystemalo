@@ -16,11 +16,10 @@ class SpecialityFactory extends Factory
     {
         $especialidades=['MEDICINA GENERAL','MEDICINA INTERNA','ORTOPEDIA','ODONTOLOGIA'];
         $length=count($especialidades);
+        $resultado=$especialidades[$this->faker->numberBetween(0,$length-1)];
         return [
-            'name' =>  $especialidades[$this->faker->numberBetween(0,$length-1)],
-            'description' =>  $this->faker->words(3),
-            'doctor_id' =>  $this->faker->numberBetween(1,10),
-
+            'name' =>  $resultado,
+            'description' =>  $this->faker->paragraph(2)
         ];
     }
 }

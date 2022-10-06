@@ -13,10 +13,10 @@ class CreatePlansSpecialitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('plans_specialities', function (Blueprint $table) {
+        Schema::create('plan_speciality', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')->constrained('plans')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('speciality_id')->constrained('specialities')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('plan_id')->constrained('plans')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePlansSpecialitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans_specialities');
+        Schema::dropIfExists('plan_speciality');
     }
 }

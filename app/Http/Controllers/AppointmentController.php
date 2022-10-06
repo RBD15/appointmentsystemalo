@@ -7,79 +7,41 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $appointments=Appointment::all();
+        return response()->json($appointments,200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $appointment= new Appointment();
+        $appointment->create($request->all());
+        return response()->json($appointment,201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
     public function show(Appointment $appointment)
     {
-        //
+        $appointment=Appointment::find($appointment->id);
+        return response()->json($appointment,200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Appointment $appointment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        $appointment=Appointment::find($appointment->id);
+        $appointment->update($request->all());
+        return response()->json($appointment,200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Appointment  $appointment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Appointment $appointment)
+    public function destroy(Appointment $appointment,Request $request)
     {
-        //
+        $appointment=Appointment::find($appointment->id);
+        if($request->has('plan_id')){
+            $appointment->plans()->detach($request->plan_id);
+        }
+        $appointment->delete();
+        return response()->json(['meessage'=>'Appointment was deleted successfully'],204);
     }
+
 }

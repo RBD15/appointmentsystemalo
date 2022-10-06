@@ -11,10 +11,11 @@ class Doctor extends Model
 {
     use HasFactory;
 
+    protected $fillable=['name','age','speciality_id'];
 
     public function speciality()
     {
-        return $this->hasOne(Speciality::class);
+        return $this->belongsTo(Speciality::class);
     }
 
     public function appointments()

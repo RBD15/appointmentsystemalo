@@ -7,79 +7,46 @@ use Illuminate\Http\Request;
 
 class SpecialityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $specialities=Speciality::all();
+        return response()->json($specialities,200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $speciality= new Speciality();
+        $speciality->name=$request->name;
+        $speciality->description=$request->description;
+        $speciality->save();
+        if($request->has('plan_id')){
+            $speciality->plans()->attach($request->plan_id);
+        }
+        return response()->json($speciality->with('plans')->get(),201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
     public function show(Speciality $speciality)
     {
-        //
+        $speciality=Speciality::find($speciality->id);
+        return response()->json($speciality,200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Speciality $speciality)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Speciality $speciality)
     {
-        //
+        $speciality=Speciality::find($speciality->id);
+        $speciality->update($request->all());
+        return response()->json($speciality,200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Speciality  $speciality
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Speciality $speciality)
+    public function destroy(Speciality $speciality,Request $request)
     {
-        //
+        $speciality=Speciality::find($speciality->id);
+        if($request->has('plan_id')){
+            $speciality->plans()->detach($request->plan_id);
+        }
+        $speciality->delete();
+        return response()->json(['meessage'=>'speciality was deleted successfully'],204);
     }
 }

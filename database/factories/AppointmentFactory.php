@@ -14,10 +14,10 @@ class AppointmentFactory extends Factory
     public function definition()
     {
         return [
-            'patient_id' =>  $this->faker->numberBetween(1,20),
-            'city_id' =>  $this->faker->numberBetween(1,20),
-            'doctor_id' =>  $this->faker->numberBetween(1,20),
-            'date'=>date('Y-m-d')
+            'patient_id' =>  $this->faker->numberBetween(1,5),
+            'city_id' =>  $this->faker->numberBetween(1,5),
+            'doctor_id' =>  $this->faker->numberBetween(1,5),
+            'date'=>date('Y-m-d h:i:s')
         ];
     }
 }

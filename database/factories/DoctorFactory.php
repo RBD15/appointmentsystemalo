@@ -16,6 +16,7 @@ class DoctorFactory extends Factory
         return [
             'name' =>  $this->faker->name(),
             'age' =>  $this->faker->numberBetween(18,50),
+            'speciality_id' =>  $this->faker->numberBetween(1,4),
         ];
     }
 }

@@ -10,8 +10,19 @@ class City extends Model
 {
     use HasFactory;
 
+    protected $fillable=['name','description','address'];
+
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
     }
+
+    // public function toArray()
+    // {
+    //     return [
+    //         "name"=>$this->name,
+    //         "description"=>$this->description,
+    //         "address"=>$this->address
+    //     ];
+    // }
 }

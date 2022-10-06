@@ -11,13 +11,16 @@ class Speciality extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','description'];
+
     public function plans()
     {
         return $this->belongsToMany(Plan::class);
     }
 
+
     public function doctors()
     {
-        return $this->belongsToMany(Doctor::class);
+        return $this->hasMany(Doctor::class);
     }
 }

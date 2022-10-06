@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        User::factory(10)->create();
-        City::factory(10)->create();        
-        Doctor::factory(10)->create();       
-        Plan::factory(10)->create();
-        Speciality::factory(10)->create();
-        Patient::factory(10)->create();
-        Appointment::factory(10)->create();
+        User::factory(6)->create();
+        City::factory(6)->create();
+        Speciality::factory(5)->create();
+        Plan::factory(5)->create();
+        Doctor::factory(6)->create();       
+        Patient::factory(6)->create();
+        Appointment::factory(100)->create();
     }
 }
