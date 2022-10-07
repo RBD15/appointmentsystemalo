@@ -21,6 +21,7 @@ class CreatePatientsTable extends Migration
             $table->string('address')->nullable();
             $table->integer('phone_number');
             $table->foreignId('plan_id')->constrained('plans');
+            $table->string('status');
             $table->timestamps();
         });
     }

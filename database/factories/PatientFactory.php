@@ -21,6 +21,7 @@ class PatientFactory extends Factory
             'address' =>  $this->faker->address(),
             'phone_number' =>  $this->faker->phoneNumber(),
             'plan_id' =>  $this->faker->numberBetween(1,4),
+            'status'=>'active'
         ];
     }
 }
