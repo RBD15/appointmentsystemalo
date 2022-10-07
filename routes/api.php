@@ -8,6 +8,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AppointmentSystem\PatientValidationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,5 @@ Route::apiResource('/v1/plan',PlanController::class);
 Route::apiResource('/v1/doctor',DoctorController::class);
 Route::apiResource('/v1/patient',PatientController::class);
 Route::apiResource('/v1/appointment',AppointmentController::class);
+
+Route::post('/v1/appointment/validate-patient',[PatientValidationController::class,'validationUser']);
