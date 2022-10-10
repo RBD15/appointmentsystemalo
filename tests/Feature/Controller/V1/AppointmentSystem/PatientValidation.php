@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PatientValidation extends TestCase
 {
-
     use RefreshDatabase;
 
     public function test_validationUser(){
@@ -22,7 +21,7 @@ class PatientValidation extends TestCase
             "document"=>$patient->document,
             "phone_number"=>$patient->phone_number
         ];
-        $response=$this->post('/api/v1/appointment/validate-patient',$data);
+        $response=$this->post('/api/v1/appointment-system/validate-patient',$data);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
     }

@@ -13,6 +13,7 @@ class AppointmentFactory extends Factory
      */
     public function definition()
     {
+        //Patient id=1 is an available Appointment
         return [
             'patient_id' =>  $this->faker->numberBetween(1,5),
             'city_id' =>  $this->faker->numberBetween(1,5),

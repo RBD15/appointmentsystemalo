@@ -9,6 +9,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentSystem\PatientValidationController;
+use App\Http\Controllers\AppointmentSystem\ScheduleAppointmentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,5 @@ Route::apiResource('/v1/doctor',DoctorController::class);
 Route::apiResource('/v1/patient',PatientController::class);
 Route::apiResource('/v1/appointment',AppointmentController::class);
 
-Route::post('/v1/appointment/validate-patient',[PatientValidationController::class,'validationUser']);
+Route::post('/v1/appointment-system/validate-patient',[PatientValidationController::class,'validationUser']);
+Route::post('/v1/appointment-system/get-available-appointmets',[ScheduleAppointmentsController::class,'getAvailableAppointments']);
