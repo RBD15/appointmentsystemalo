@@ -15,7 +15,7 @@ class AppointmentFactory extends Factory
     {
         //Patient id=1 is an available Appointment
         return [
-            'patient_id' =>  $this->faker->numberBetween(1,5),
+            'patient_id' =>  $this->faker->numberBetween(1,3),
             'city_id' =>  $this->faker->numberBetween(1,5),
             'doctor_id' =>  $this->faker->numberBetween(1,5),
             'date'=>date('Y-m-d h:i:s')

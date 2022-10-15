@@ -23,15 +23,28 @@ class ScheduleAppointmentsController extends Controller
                 foreach ($specialitiesArray as $key => $value) {
                     array_push($doctorsID,$value['id']);
                 }
-                $availableAppointments=AvailableAppointmentsResource::collection(Appointment::where([['patient_id','=',1,],['city_id','=',$request->city_id]])->whereIn('doctor_id',$doctorsID)->get());
+                $availableAppointments=AvailableAppointmentsResource::collection(Appointment::whereIn('doctor_id',$doctorsID)->where([['patient_id','=',1,],['city_id','=',$request->city_id]])->get());
             }else{
                 $availableAppointments=AvailableAppointmentsResource::collection(Appointment::where([['patient_id','=',1,],['city_id','=',$request->city_id],['doctor_id','=',$request->doctor_id]])->get());
-                
             }
             return response()->json($availableAppointments,200);
         }  
 
 
+        return response()->json(['message'=>'Bad request'],401);
+    }
+
+    public function setAppointments(Request $request){
+
+        if($request->has('contrato') && $request->has('appointment_id')){
+            $patient=Patient::find($request->contrato);
+            $appointment=Appointment::find($request->appointment_id);
+
+            $appointment->patient_id=$request->contrato;
+            $appointment->save();
+
+            return response()->json($appointment,200);
+        }  
         return response()->json(['message'=>'Bad request'],401);
     }
 }

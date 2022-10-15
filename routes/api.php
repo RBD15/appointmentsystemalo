@@ -9,6 +9,9 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentSystem\PatientValidationController;
+use App\Http\Controllers\AppointmentSystem\AvailableCitiesController;
+use App\Http\Controllers\AppointmentSystem\AvailableDoctorsController;
+use App\Http\Controllers\AppointmentSystem\AvailableSpecialiesController;
 use App\Http\Controllers\AppointmentSystem\ScheduleAppointmentsController;
 
 /*
@@ -34,4 +37,8 @@ Route::apiResource('/v1/patient',PatientController::class);
 Route::apiResource('/v1/appointment',AppointmentController::class);
 
 Route::post('/v1/appointment-system/validate-patient',[PatientValidationController::class,'validationUser']);
-Route::post('/v1/appointment-system/get-available-appointmets',[ScheduleAppointmentsController::class,'getAvailableAppointments']);
+Route::post('/v1/appointment-system/get-available-appointments',[ScheduleAppointmentsController::class,'getAvailableAppointments']);
+Route::post('/v1/appointment-system/set-appointment',[ScheduleAppointmentsController::class,'setAppointments']);
+Route::post('/v1/appointment-system/get-available-speciality',[AvailableSpecialiesController::class,'getSpecialities']);
+Route::post('/v1/appointment-system/get-available-city',[AvailableCitiesController::class,'getCities']);
+Route::post('/v1/appointment-system/get-available-doctor',[AvailableDoctorsController::class,'getDoctors']);
