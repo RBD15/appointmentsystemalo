@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class SpecialityController extends Controller
 {
-
     public function index()
     {
         $specialities=Speciality::all();

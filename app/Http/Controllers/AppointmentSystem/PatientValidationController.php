@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class PatientValidationController extends Controller
 {
     public function validationUser(Request $request){
-
         if($request->has('document') && $request->has('phone_number')){
             $result=Patient::where('document','=',$request->document)->get()->first();
             if($result->phone_number==$request->phone_number){

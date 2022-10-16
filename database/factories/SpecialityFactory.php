@@ -2,16 +2,10 @@
 
 namespace Database\Factories;
 
-use Nette\Utils\Random;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SpecialityFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         $especialidades=['MEDICINA GENERAL','MEDICINA INTERNA','ORTOPEDIA','ODONTOLOGIA'];

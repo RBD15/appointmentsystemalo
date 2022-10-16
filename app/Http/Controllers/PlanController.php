@@ -20,7 +20,6 @@ class PlanController extends Controller
         $plan= new Plan;
         $plan->name=$request->name;
         $plan->save();
-        // $plan->create($request->only('name'));
         if($request->has('speciality_id')){
             $plan->specialities()->attach($request->speciality_id);
         }

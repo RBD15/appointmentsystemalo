@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use Nette\Utils\Random;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PlanFactory extends Factory

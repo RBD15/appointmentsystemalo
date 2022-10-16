@@ -5,7 +5,6 @@ namespace App\Http\Controllers\AppointmentSystem;
 use App\Models\City;
 use App\Models\Speciality;
 use App\Models\Appointment;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,11 +19,9 @@ class AvailableCitiesController extends Controller
             }
             $availableAppointmentsaArray=Appointment::whereIn('doctor_id',$doctorsID)->where('patient_id',1)->get()->pluck('city')->toArray();
             $citiesId=array();
-            // $cities=array();
             foreach ($availableAppointmentsaArray as $key => $value) {
                 if(array_search($value['id'],$citiesId)===false){
                     array_push($citiesId,$value['id']);
-                    // array_push($cities,['id'=>$value['id'],'name'=>$value['name']]);
                 }
             }
             $cities=City::find($citiesId);

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\AppointmentSystem;
 
 use App\Models\Doctor;
-use App\Models\Speciality;
-use App\Models\Appointment;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

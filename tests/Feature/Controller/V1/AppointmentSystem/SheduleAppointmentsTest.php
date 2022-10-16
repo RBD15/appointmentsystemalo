@@ -68,7 +68,6 @@ class SheduleAppointmentsTest extends TestCase
             'patient_id'=>2
         ];
         $response = $this->post('/api/v1/appointment-system/set-appointment/',$data);
-        // $response->assertJsonStructure(['id','name'],$response->getOriginalContent()[0]);
         $this->assertDatabaseHas('appointments',$result);
         $this->assertDatabaseMissing('appointments',$appointment->toArray());
         $response->assertHeader('Content-Type','application/json');
