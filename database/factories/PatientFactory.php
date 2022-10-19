@@ -13,7 +13,7 @@ class PatientFactory extends Factory
             'document' =>  $this->faker->numberBetween(1,99999999),
             'age' =>  $this->faker->numberBetween(18,50),
             'address' =>  $this->faker->address(),
-            'phone_number' =>  $this->faker->phoneNumber(),
+            'phone_number' =>  $this->faker->numberBetween(18,50),
             'plan_id' =>  $this->faker->numberBetween(1,4),
             'status'=>'active'
         ];
