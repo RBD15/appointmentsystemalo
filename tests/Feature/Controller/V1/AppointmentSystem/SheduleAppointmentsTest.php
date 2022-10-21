@@ -74,4 +74,22 @@ class SheduleAppointmentsTest extends TestCase
         $response->assertStatus(200);
 
     }
+
+    public function test_create_appointments(){
+        $city=City::factory(5)->create()->first();
+        $speciality= Speciality::factory(5)->create()->first();
+        $plan=Plan::factory(4)->create()->first();
+        $doctor=Doctor::factory(20)->create()->first();
+        $patient=Patient::factory(10)->create()->first();
+
+        $appointments = Appointment::factory(20)->create();
+
+        $response=$this->post('/api/v1/appointment-system/generate-available-appointments',['admin'=>1234]);
+        // dd($response->getOriginalContent()[0]);
+        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection",$response->getOriginalContent());
+        $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent()[0]);
+        $this->assertTrue($response->getOriginalContent()[0]->patient_id==1);
+        $response->assertHeader('Content-Type','application/json');
+        $response->assertStatus(200);
+    }
 }

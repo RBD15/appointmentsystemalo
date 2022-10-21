@@ -43,4 +43,12 @@ class ScheduleAppointmentsController extends Controller
         }  
         return response()->json(['message'=>'Bad request'],401);
     }
+
+    public function generateAvailableAppointments(Request $request){
+        if($request->admin!=1234)
+            return response()->json(['message'=>'Unauthorizated'],200);
+
+        $appointments=Appointment::factory(100)->create(['patient_id'=>1]);
+        return response()->json($appointments,200);
+    }
 }
