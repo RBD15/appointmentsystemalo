@@ -82,10 +82,9 @@ class SheduleAppointmentsTest extends TestCase
         $doctor=Doctor::factory(20)->create()->first();
         $patient=Patient::factory(10)->create()->first();
 
-        $appointments = Appointment::factory(20)->create();
+        $appointments = Appointment::factory(20)->create(['patient_id'=>1]);
 
         $response=$this->post('/api/v1/appointment-system/generate-available-appointments',['admin'=>1234]);
-        // dd($response->getOriginalContent()[0]);
         $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection",$response->getOriginalContent());
         $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent()[0]);
         $this->assertTrue($response->getOriginalContent()[0]->patient_id==1);
