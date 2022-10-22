@@ -20,7 +20,7 @@ class AvailableAppointmentsResource extends JsonResource
             "city" => $this->city->only('name','address'),
             "speciality" => $this->doctor->speciality->only(['name','description']),
             "doctor" => $this->doctor->only(['name']),
-            "date" => "2022-10-08 17:51:09"
+            "date" => $this->date
             ];
     }
 }
