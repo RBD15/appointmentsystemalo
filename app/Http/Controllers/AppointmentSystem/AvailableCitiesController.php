@@ -7,11 +7,12 @@ use App\Models\Speciality;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppointmentSystem\AvailableCities;
 
 class AvailableCitiesController extends Controller
 {
-    public function getCities(Request $request){
-        if($request->has('contrato') && $request->has('speciality_id')){
+    public function getCities(AvailableCities $request){
+
             $specialityArray=Speciality::find($request->speciality_id)->doctors->toArray();
             $doctorsID=array();
             foreach ($specialityArray as $key => $value) {
@@ -26,7 +27,5 @@ class AvailableCitiesController extends Controller
             }
             $cities=City::find($citiesId);
             return response()->json($cities,200);
-        }  
-        return response()->json(['message'=>'Bad request'],401); 
     }
 }

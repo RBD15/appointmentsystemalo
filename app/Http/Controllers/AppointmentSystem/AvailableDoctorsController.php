@@ -5,11 +5,11 @@ namespace App\Http\Controllers\AppointmentSystem;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppointmentSystem\AvailableDoctor;
 
 class AvailableDoctorsController extends Controller
 {
-    public function getDoctors(Request $request){
-        if($request->has('contrato') && $request->has('speciality_id') && $request->has('city_id')){
+    public function getDoctors(AvailableDoctor $request){
             if($request->isNotFilled('city_id')){
                 $doctors=Doctor::find($request->speciality_id)->get();
             }else{
@@ -24,8 +24,7 @@ class AvailableDoctorsController extends Controller
                 }
                 $doctors=Doctor::find($doctors);
             }
-            return response()->json($doctors,200);
-        }  
-        return response()->json(['message'=>'Bad request'],401); 
+        return response()->json($doctors,200);
+
     }
 }
