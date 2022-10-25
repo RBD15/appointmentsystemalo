@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AppointmentSystem;
 
+use App\Events\SetAppointment;
 use App\Models\Patient;
 use App\Models\Speciality;
 use App\Models\Appointment;
@@ -42,7 +43,8 @@ class ScheduleAppointmentsController extends Controller
 
             if($appointment->patient_id==1){
                 $appointment->patient_id=$request->contrato;
-                $appointment->save();
+                // $appointment->save();
+                Event(new SetAppointment($patient,$appointment));
                 return response()->json($appointment,200);
             }
     }
