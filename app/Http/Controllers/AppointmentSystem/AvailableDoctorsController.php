@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentSystem\AvailableDoctor;
+use App\Http\Resources\AvailableDoctor as ResourcesAvailableDoctor;
 
 class AvailableDoctorsController extends Controller
 {
@@ -22,7 +23,7 @@ class AvailableDoctorsController extends Controller
                         }
                     }
                 }
-                $doctors=Doctor::find($doctors);
+                $doctors=ResourcesAvailableDoctor::collection(Doctor::find($doctors));
             }
         return response()->json($doctors,200);
 

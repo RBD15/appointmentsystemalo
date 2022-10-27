@@ -45,7 +45,7 @@ class ScheduleAppointmentsController extends Controller
                 $appointment->patient_id=$request->contrato;
                 // $appointment->save();
                 Event(new SetAppointment($patient,$appointment));
-                return response()->json($appointment,200);
+                return response()->json($appointment->only('id','date','city','doctor'),200);
             }
     }
 

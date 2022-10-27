@@ -7,14 +7,15 @@ use App\Models\Speciality;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentSystem\AvailableSpeciality;
+use App\Http\Resources\AvailableSpeciality as ResourcesAvailableSpeciality;
 
 class AvailableSpecialiesController extends Controller
 {
     public function getSpecialities(AvailableSpeciality $request){
         if($request->has('contrato')){
-                $specialities=Plan::find($request->contrato)->specialities;
+                $specialities=ResourcesAvailableSpeciality::collection(Plan::find($request->contrato)->specialities);
         }else{
-                $specialities=Speciality::all();                
+                $specialities=ResourcesAvailableSpeciality::collection(Speciality::all());                
         }
         return response()->json($specialities,200);
   

@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentSystem\AvailableCities;
+use App\Http\Resources\AvailableCity;
 
 class AvailableCitiesController extends Controller
 {
@@ -25,7 +26,7 @@ class AvailableCitiesController extends Controller
                     array_push($citiesId,$value['id']);
                 }
             }
-            $cities=City::find($citiesId);
+            $cities=AvailableCity::collection(City::find($citiesId));
             return response()->json($cities,200);
     }
 }
