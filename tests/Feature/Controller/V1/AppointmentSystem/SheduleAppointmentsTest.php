@@ -26,11 +26,10 @@ class SheduleAppointmentsTest extends TestCase
 
         //A set relationship
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>3])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>3,'patient_id'=>1])->first();
 
         $data=[
             "contrato"=>$patient->id,
-            "plan"=>$patient->plan_id,
             "doctor_id"=>null,
             "speciality_id"=>1,
             "city_id"=>3  
@@ -54,7 +53,7 @@ class SheduleAppointmentsTest extends TestCase
 
         //A set relationship
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>1])->first();
 
         $data=[
             'contrato'=>2,
@@ -73,5 +72,22 @@ class SheduleAppointmentsTest extends TestCase
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
 
+    }
+
+    public function test_create_appointments(){
+        $city=City::factory(5)->create()->first();
+        $speciality= Speciality::factory(5)->create()->first();
+        $plan=Plan::factory(4)->create()->first();
+        $doctor=Doctor::factory(20)->create()->first();
+        $patient=Patient::factory(10)->create()->first();
+
+        $appointments = Appointment::factory(20)->create(['patient_id'=>1]);
+
+        $response=$this->post('/api/v1/appointment-system/generate-available-appointments',['admin'=>1234]);
+        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection",$response->getOriginalContent());
+        $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent()[0]);
+        $this->assertTrue($response->getOriginalContent()[0]->patient_id==1);
+        $response->assertHeader('Content-Type','application/json');
+        $response->assertStatus(200);
     }
 }

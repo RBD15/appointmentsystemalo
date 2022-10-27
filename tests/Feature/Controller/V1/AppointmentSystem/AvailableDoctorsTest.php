@@ -27,15 +27,17 @@ class AvailableDoctorsTest extends TestCase
 
       //A set relationship
       $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-      $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1])->first();
+      $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>1])->first();
 
         $data=[
             'contrato'=>1,
             'speciality_id'=>1,
             'city_id'=>1
         ];   
-        $response = $this->post('/api/v1/appointment-system/get-available-doctor/',$data);        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$response->getOriginalContent());
-        $this->assertInstanceOf('\App\Models\Doctor',$response->getOriginalContent()[0]);
+        $response = $this->post('/api/v1/appointment-system/get-available-doctor/',$data); 
+        // dd($response);       
+        $this->assertInstanceOf('Illuminate\Http\Resources\Json\AnonymousResourceCollection',$response->getOriginalContent());
+        $this->assertInstanceOf('App\Http\Resources\AvailableDoctor',$response->getOriginalContent()[0]);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
 

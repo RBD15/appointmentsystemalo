@@ -34,6 +34,6 @@ class AvailableSpecialiesControllerTest extends TestCase
         $response = $this->post('/api/v1/appointment-system/get-available-speciality/',$data);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
-        $this->assertInstanceOf('App\Models\Speciality',$response->getOriginalContent()[0]);
+        $this->assertInstanceOf('App\Http\Resources\AvailableSpeciality',$response->getOriginalContent()[0]);
     }
 }

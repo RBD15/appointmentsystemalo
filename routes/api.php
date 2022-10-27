@@ -37,6 +37,7 @@ Route::apiResource('/v1/patient',PatientController::class);
 Route::apiResource('/v1/appointment',AppointmentController::class);
 
 Route::post('/v1/appointment-system/validate-patient',[PatientValidationController::class,'validationUser']);
+Route::post('/v1/appointment-system/generate-available-appointments',[ScheduleAppointmentsController::class,'generateAvailableAppointments']);
 Route::post('/v1/appointment-system/get-available-appointments',[ScheduleAppointmentsController::class,'getAvailableAppointments']);
 Route::post('/v1/appointment-system/set-appointment',[ScheduleAppointmentsController::class,'setAppointments']);
 Route::post('/v1/appointment-system/get-available-speciality',[AvailableSpecialiesController::class,'getSpecialities']);
