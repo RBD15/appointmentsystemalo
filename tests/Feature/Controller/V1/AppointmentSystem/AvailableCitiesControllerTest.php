@@ -11,6 +11,7 @@ use App\Models\Speciality;
 use App\Models\Appointment;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Ui\Presets\React;
 
 class AvailableCitiesControllerTest extends TestCase
 {
@@ -34,7 +35,7 @@ class AvailableCitiesControllerTest extends TestCase
             'speciality_id'=>1
         ];   
         $response = $this->post('/api/v1/appointment-system/get-available-city/',$data);
-        $response->assertJsonStructure(['id','name'],$response->getOriginalContent()[0]);
+        $response->assertJsonStructure(['id','nombre','direccion'],$response->getOriginalContent()[0]);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
 

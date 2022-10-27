@@ -34,8 +34,10 @@ class AvailableDoctorsTest extends TestCase
             'speciality_id'=>1,
             'city_id'=>1
         ];   
-        $response = $this->post('/api/v1/appointment-system/get-available-doctor/',$data);        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection',$response->getOriginalContent());
-        $this->assertInstanceOf('\App\Models\Doctor',$response->getOriginalContent()[0]);
+        $response = $this->post('/api/v1/appointment-system/get-available-doctor/',$data); 
+        // dd($response);       
+        $this->assertInstanceOf('Illuminate\Http\Resources\Json\AnonymousResourceCollection',$response->getOriginalContent());
+        $this->assertInstanceOf('App\Http\Resources\AvailableDoctor',$response->getOriginalContent()[0]);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
 
