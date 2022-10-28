@@ -18,8 +18,8 @@ class ScheduleAppointmentsController extends Controller
 
     public function getAvailableAppointments(GetAvailableRequest $request){
 
-            $offset='+2 Hours';
-            $currentDate=date('Y-m-d H:s:i',Carbon::now($offset)->getTimestamp());
+            $offset=2;
+            $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
             if($request->isNotFilled('doctor_id') && $request->isNotFilled('speciality_id')){
                 $availableAppointments=AvailableAppointmentsResource::collection(Appointment::where([['patient_id','=',1,],['city_id','=',$request->city_id],['date','>',$currentDate]])->get());
             }elseif ($request->isNotFilled('doctor_id')) {
