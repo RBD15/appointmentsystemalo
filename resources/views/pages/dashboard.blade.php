@@ -2,5 +2,5 @@
 
 
 @section('content')
-    <div id="dashboard"></div>
+    <div id="dashboard" data-values="{{$values}}"></div>
 @endsection
