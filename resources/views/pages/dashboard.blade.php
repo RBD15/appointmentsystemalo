@@ -2,5 +2,5 @@
 
 
 @section('content')
-    <div id="dashboard" data-values="{{$values}}"></div>
+    <div id="dashboard" data-route="{{$route}}" data-token="{{$token}}" data-values="{{$values}}"></div>
 @endsection

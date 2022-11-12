@@ -12,7 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- Import All React Components --}}
-    <script src="../../js/app.js" defer></script>
+    {{--It was needed to delete defer attribute from script tag--}}
+    <script src="../../js/app.js" ></script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

@@ -4,65 +4,26 @@ use App\Models\City;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Speciality;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\v1\CityController;
+use App\Http\Controllers\v1\PlanController;
+use App\Http\Controllers\v1\DoctorController;
+use App\Http\Controllers\v1\PatientController;
+use App\Http\Controllers\v1\SpecialityController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/speciality', function () {
-    $specialities=Speciality::all();
-    return view('pages.dashboard',['values'=>$specialities]);
-});
-
-
-
-Route::get('/city', function () {
-    $cities=City::all();
-    return view('pages.dashboard',['values'=>$cities]);
-});
-
-Route::get('/city/edit/{id}', function (Request $request) {
-    $id=$request->id;
-    $city=City::find($id);
-    dd($city);
-    // return view('pages.dashboard',['values'=>$city]);
-});
-
-Route::get('/city/delete/{id}', function (Request $request) {
-    $id=$request->id;
-    $city=City::find($id);
-    dd($city);
-    // return view('pages.dashboard',['values'=>$city]);
-});
-
-
-
-
-
-
-Route::get('/doctor', function () {
-    $doctors=Doctor::all();
-    return view('pages.dashboard',['values'=>$doctors]);
-});
-
-Route::get('/patient', function () {
-    $patients=Patient::all();
-    return view('pages.dashboard',['values'=>$patients]);
-});
+Route::resource('/city',CityController::class);
+Route::resource('/speciality',SpecialityController::class);
+Route::resource('/plan',PlanController::class);
+Route::resource('/doctor',DoctorController::class);
+Route::resource('/patient',PatientController::class);
+// Route::resource('/appointment',AppointmentController::class);
 
 Auth::routes();
 

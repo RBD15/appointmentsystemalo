@@ -1,24 +1,55 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
-function Dashboard(props) {
+const Dashboard=(props)=> {
+    const route=props.route
+    const token=props.token
     const [values,setValues] = useState([])
 
     useEffect(async()=>{
         setValues(JSON.parse(props.values));
     },[]);
 
+    const sendAction=(event,action,id)=>{
+        event.preventDefault()
+        let url=window.location.hostname
+        if(url=='localhost'){
+            url = window.location.protocol+'//'+window.location.hostname+':'+window.location.port+route
+        }
+
+        switch(action){
+            case 'edit':
+                break;
+            case 'delete':
+                const data={
+                    mode:'cors',
+                    method:'DELETE',
+                    headers:{
+                        Accept: 'application/json',
+                        'Content-Type':'application/json',
+                        'X-CSRF-TOKEN': token
+                        }
+                }
+                fetch('http://localhost:8000'+route+'/'+id,data).then(
+                    res=>window.location.href=url
+                ).catch(err=>console.error(err))
+                break;
+            default:
+                break
+        }
+    }
+
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-10">
-                    <table className="table table-striped">
+                    <table className="table table-striped" >
                         <thead>
-                            <tr>
+                            <tr key={route}>
                                 {(()=>{ 
                                     if(values!=undefined && values.length!=0){
                                         return Object.keys(values[0]).map((key)=>{
-                                            return (<th scope="col">{key}</th>)
+                                            return (<th scope="col" key={'column'+key}>{key}</th>)
                                         }
                                         )
                                     }
@@ -30,17 +61,17 @@ function Dashboard(props) {
                         <tbody>
                             {values.map((value)=>{
                                 return (
-                                    <tr>
+                                    <tr key={'id'+value.id}>
                                     {(()=>{ 
                                         if(values!=undefined && values.length!=0){
                                             return Object.keys(value).map((key)=>{
-                                                return (<td>{value[key]}</td>)
+                                                return (<td key={'row'+key+value[key]} >{value[key]}</td>)
                                             })
                                         }
                                     })()}
-                                        <td className="d-flex">
-                                            <a href={"/city/edit/"+value.id} className="btn btn-primary" >Edit</a>
-                                            <a href={"/city/delete/"+value.id}className="btn btn-danger">Delete</a>
+                                        <td className="d-flex" key={value.id+'route'}>
+                                            <button type="button"  className="btn btn-primary" key={value.id+''+route+'edit'} onClick={(event)=>sendAction(event,'edit',value.id)}>Edit</button>
+                                            <button type="button" className="btn btn-danger" key={value.id+''+route+'delete'}  onClick={(event)=>sendAction(event,'delete',value.id)} >Delete</button>
                                         </td>
                                     </tr>
                                 ) 

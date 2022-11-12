@@ -5325,6 +5325,8 @@ __webpack_require__(/*! ./components/Example */ "./resources/js/components/Examp
 
 __webpack_require__(/*! ./pages/Dashboard */ "./resources/js/pages/Dashboard.jsx");
 
+__webpack_require__(/*! ./pages/Create */ "./resources/js/pages/Create.jsx");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -5412,6 +5414,78 @@ if (document.getElementById('example')) {
 
 /***/ }),
 
+/***/ "./resources/js/pages/Create.jsx":
+/*!***************************************!*\
+  !*** ./resources/js/pages/Create.jsx ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+function Create(props) {
+  var params = JSON.parse(props.params);
+  console.log(params.route);
+  var fields = JSON.parse(props.fields);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    className: "container",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+      method: "POST",
+      action: params.route,
+      children: [fields.map(function (field) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "mb-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+            "for": "exampleInputEmail1",
+            className: "form-label",
+            children: field.name
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+            type: field.type,
+            name: field.name,
+            className: "form-control",
+            id: "exampleInputEmail1",
+            "aria-describedby": "emailHelp"
+          })]
+        }, 'campo' + field.name);
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+        type: "hidden",
+        name: "_token",
+        value: params.csrf
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+        type: "submit",
+        className: "btn btn-primary",
+        children: "Submit"
+      })]
+    })
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Create);
+
+if (document.getElementById('create')) {
+  var element = document.getElementById('create');
+  var props = Object.assign({}, element.dataset);
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Create, _objectSpread({}, props)), document.getElementById('create'));
+}
+
+/***/ }),
+
 /***/ "./resources/js/pages/Dashboard.jsx":
 /*!******************************************!*\
   !*** ./resources/js/pages/Dashboard.jsx ***!
@@ -5457,7 +5531,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function Dashboard(props) {
+var Dashboard = function Dashboard(props) {
+  var route = props.route;
+  var token = props.token;
+
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       values = _useState2[0],
@@ -5477,6 +5554,41 @@ function Dashboard(props) {
       }
     }, _callee);
   })), []);
+
+  var sendAction = function sendAction(event, action, id) {
+    event.preventDefault();
+    var url = window.location.hostname;
+
+    if (url == 'localhost') {
+      url = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + route;
+    }
+
+    switch (action) {
+      case 'edit':
+        break;
+
+      case 'delete':
+        var data = {
+          mode: 'cors',
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': token
+          }
+        };
+        fetch('http://localhost:8000' + route + '/' + id, data).then(function (res) {
+          return window.location.href = url;
+        })["catch"](function (err) {
+          return console.error(err);
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     className: "container",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -5493,14 +5605,14 @@ function Dashboard(props) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
                       scope: "col",
                       children: key
-                    });
+                    }, 'column' + key);
                   });
                 }
               }(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
                 scope: "col",
                 children: "Action"
               })]
-            })
+            }, route)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("tbody", {
             children: values.map(function (value) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
@@ -5509,29 +5621,35 @@ function Dashboard(props) {
                     return Object.keys(value).map(function (key) {
                       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
                         children: value[key]
-                      });
+                      }, 'row' + key + value[key]);
                     });
                   }
                 }(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("td", {
                   className: "d-flex",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                    href: "/city/edit/" + value.id,
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                    type: "button",
                     className: "btn btn-primary",
+                    onClick: function onClick(event) {
+                      return sendAction(event, 'edit', value.id);
+                    },
                     children: "Edit"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                    href: "/city/delete/" + value.id,
+                  }, value.id + '' + route + 'edit'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                    type: "button",
                     className: "btn btn-danger",
+                    onClick: function onClick(event) {
+                      return sendAction(event, 'delete', value.id);
+                    },
                     children: "Delete"
-                  })]
-                })]
-              });
+                  }, value.id + '' + route + 'delete')]
+                }, value.id + 'route')]
+              }, 'id' + value.id);
             })
           })]
         })
       })
     })
   });
-}
+};
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dashboard);
 

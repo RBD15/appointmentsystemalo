@@ -14,4 +14,5 @@ require('./bootstrap');
 
 require('./components/Example');
 require('./pages/Dashboard');
+require('./pages/Create');
 
