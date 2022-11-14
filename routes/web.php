@@ -13,9 +13,9 @@ use App\Http\Controllers\v1\DoctorController;
 use App\Http\Controllers\v1\PatientController;
 use App\Http\Controllers\v1\SpecialityController;
 
-
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+Route::get('/home', function () {
+    return view('pages.main');
 });
 
 Route::resource('/city',CityController::class);
@@ -25,6 +25,4 @@ Route::resource('/doctor',DoctorController::class);
 Route::resource('/patient',PatientController::class);
 // Route::resource('/appointment',AppointmentController::class);
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
