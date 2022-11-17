@@ -28,7 +28,7 @@ const Dashboard=(props)=> {
                         Accept: 'application/json',
                         'Content-Type':'application/json',
                         'X-CSRF-TOKEN': token
-                        }
+                    }
                 }
                 fetch('http://localhost:8000'+route+'/'+id,data).then(
                     res=>window.location.href=url

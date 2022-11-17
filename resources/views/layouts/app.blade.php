@@ -79,9 +79,15 @@
 
         <main class="py-4">
             @guest
-                <h4>Welcome you only have to Log</h4>
+                @if (Route::current()->uri=="login")
+                    @yield('content')
+                @else
+                    <h2>Guest</h2>
+                    <h4 >Welcome you only have to Log</h4>
+                @endif
             @else
-                @yield('content')
+                <h4>Logged</h4>
+                @yield('main')
             @endguest
         </main>
     </div>

@@ -20,6 +20,7 @@ function Main() {
                                 <h4 className="my-0 fw-normal">Patients</h4>
                             </div>
                             <div className="card-body">
+                                <a href="/patient/create" className="w-100 btn btn-lg btn-success">Create</a>
                                 <a href="/patient" className="w-100 btn btn-lg btn-primary">Show</a>
                             </div>
                         </div>
@@ -30,6 +31,7 @@ function Main() {
                                 <h4 className="my-0 fw-normal">Speciality</h4>
                             </div>
                             <div className="card-body">
+                                <a href="/speciality/create" className="w-100 btn btn-lg btn-success">Create</a>
                                 <a href="/speciality" className="w-100 btn btn-lg btn-primary">Show</a>
                             </div>
                         </div>
@@ -40,6 +42,7 @@ function Main() {
                                 <h4 className="my-0 fw-normal">Cities</h4>
                             </div>
                             <div className="card-body">
+                                <a href="/city/create" className="w-100 btn btn-lg btn-success">Create</a>
                                 <a href="/city" className="w-100 btn btn-lg btn-primary">Show</a>
                             </div>
                         </div>
@@ -50,6 +53,7 @@ function Main() {
                                 <h4 className="my-0 fw-normal">Doctors</h4>
                             </div>
                             <div className="card-body">
+                                <a href="/doctor/create" className="w-100 btn btn-lg btn-success">Create</a>
                                 <a href="/doctor" className="w-100 btn btn-lg btn-primary">Show</a>
                             </div>
                         </div>
@@ -60,6 +64,7 @@ function Main() {
                                 <h4 className="my-0 fw-normal">Plans</h4>
                             </div>
                             <div className="card-body">
+                                <a href="/plan/create" className="w-100 btn btn-lg btn-success">Create</a>
                                 <a href="/plan" className="w-100 btn btn-lg btn-primary">Show</a>
                             </div>
                         </div>

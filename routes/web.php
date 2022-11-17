@@ -18,6 +18,10 @@ Route::get('/home', function () {
     return view('pages.main');
 });
 
+Route::get('/', function () {
+    return view('pages.main');
+});
+
 Route::resource('/city',CityController::class);
 Route::resource('/speciality',SpecialityController::class);
 Route::resource('/plan',PlanController::class);
