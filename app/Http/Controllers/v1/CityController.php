@@ -29,7 +29,7 @@ class CityController extends Controller
                 array_push($result,array("name"=>$cities[$i],"type"=>$this->checkColumnType($types[$i])));
         };
         $fields=json_encode($result,FALSE);
-        return view('pages.create',['params'=>json_encode(['csrf'=>$token,'route'=>'/city'],FALSE),'fields'=>$fields]);
+        return view('pages.create',['params'=>json_encode(['csrf'=>$token,'route'=>'/city'],FALSE),'fields'=>$fields,'action'=>'create']);
     }
 
     private function checkColumnType($type){
@@ -53,15 +53,27 @@ class CityController extends Controller
     }
 
     public function show(City $city)
-    {   $token = csrf_token();
+    {           
+        $token = csrf_token();
         dd('show');
         $city=City::find($city->id);
         $cities=City::all();
         return view('pages.dashboard',['route'=>'/city','token'=>$token,'values'=>$cities]);
     }
 
-    public function edit(Request $request){
-        dd($request);
+    public function edit(City $city){
+        // dd($city);
+        $token = csrf_token();
+        $result=array();
+        $cities=Schema::getColumnListing('cities');
+        $types=DB::select('describe cities');
+        for ($i=0; $i <count($types); $i++) { 
+            if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
+                array_push($result,array("name"=>$cities[$i],"type"=>$this->checkColumnType($types[$i])));
+        };
+        $fields=json_encode($result,FALSE);
+        return view('pages.edit',['params'=>json_encode(['csrf'=>$token,'route'=>'/city'],FALSE),'fields'=>$fields,'model'=>json_encode($city)]);
+
     }
 
     public function update(Request $request, City $city)

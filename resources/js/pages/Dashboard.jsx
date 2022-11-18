@@ -70,7 +70,7 @@ const Dashboard=(props)=> {
                                         }
                                     })()}
                                         <td className="d-flex" key={value.id+'route'}>
-                                            <button type="button"  className="btn btn-primary" key={value.id+''+route+'edit'} onClick={(event)=>sendAction(event,'edit',value.id)}>Edit</button>
+                                            <a type="button"  href={route+'/'+value.id+'/edit'} className="btn btn-primary" key={value.id+''+route+'edit'}>Edit</a>
                                             <button type="button" className="btn btn-danger" key={value.id+''+route+'delete'}  onClick={(event)=>sendAction(event,'delete',value.id)} >Delete</button>
                                         </td>
                                     </tr>
