@@ -5692,10 +5692,35 @@ function Edit(props) {
   var params = JSON.parse(props.params);
   var model = JSON.parse(props.model);
   var fields = JSON.parse(props.fields);
+  var route = params.route;
+  var form = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var sendAction = function sendAction(event, model) {
+    event.preventDefault();
+    var url = window.location.hostname;
+    console.log(url);
+    console.log(form); // if(url=='localhost'){
+    //     url = window.location.protocol+'//'+window.location.hostname+':'+window.location.port+route
+    // }
+    // const data={
+    //     mode:'cors',
+    //     method:'PUT',
+    //     headers:{
+    //         Accept: 'application/json',
+    //         'Content-Type':'application/json',
+    //         'X-CSRF-TOKEN': token
+    //     },
+    //     body:{} 
+    // }
+    // fetch('http://localhost:8000'+route+'/'+model.id,data).then(
+    //     res=>window.location.href=url
+    // ).catch(err=>console.error(err))
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     className: "container",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
-      method: "POST",
+      ref: form,
       children: [fields.map(function (field) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "mb-3",
@@ -5717,10 +5742,9 @@ function Edit(props) {
         name: "_token",
         value: params.csrf
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-        type: "submit",
         className: "btn btn-primary",
-        onSubmit: function onSubmit() {
-          console.log('submit');
+        onClick: function onClick(e) {
+          return sendAction(e, model);
         },
         children: "Edit"
       })]

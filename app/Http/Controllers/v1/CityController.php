@@ -77,7 +77,7 @@ class CityController extends Controller
     }
 
     public function update(Request $request, City $city)
-    {
+    {   dd($city);
         $city=City::find($city->id);
         $city->update($request->all());
         return response()->json($city,200);
