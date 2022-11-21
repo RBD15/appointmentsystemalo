@@ -47,6 +47,7 @@ class ScheduleAppointmentsController extends Controller
                 Event(new SetAppointment($patient,$appointment));
                 return response()->json($appointment->only('id','date','city','doctor'),200);
             }
+            return response()->json(['message'=>'No es posible agendar la cita seleccionada'],500);
     }
 
     public function generateAvailableAppointments(Request $request){
