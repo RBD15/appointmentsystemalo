@@ -12,7 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- Import All React Components --}}
-    <script src="../../js/app.js" defer></script>
+    {{--It was needed to delete defer attribute from script tag--}}
+    <script src="../../js/app.js" ></script>
     
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -46,12 +47,12 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
-
+{{-- 
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -77,7 +78,17 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            @guest
+                @if (Route::current()->uri=="login")
+                    @yield('content')
+                @else
+                    <h2>Guest</h2>
+                    <h4 >Welcome you only have to Log</h4>
+                @endif
+            @else
+                <h4>Logged</h4>
+                @yield('main')
+            @endguest
         </main>
     </div>
 </body>

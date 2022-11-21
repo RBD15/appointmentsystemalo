@@ -2,17 +2,17 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\PlanController;
-use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\SpecialityController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\AppointmentSystem\PatientValidationController;
-use App\Http\Controllers\AppointmentSystem\AvailableCitiesController;
-use App\Http\Controllers\AppointmentSystem\AvailableDoctorsController;
-use App\Http\Controllers\AppointmentSystem\AvailableSpecialiesController;
-use App\Http\Controllers\AppointmentSystem\ScheduleAppointmentsController;
+use App\Http\Controllers\api\v1\CityController;
+use App\Http\Controllers\api\v1\PlanController;
+use App\Http\Controllers\api\v1\DoctorController;
+use App\Http\Controllers\api\v1\PatientController;
+use App\Http\Controllers\api\v1\SpecialityController;
+use App\Http\Controllers\api\v1\AppointmentController;
+use App\Http\Controllers\api\v1\AppointmentSystem\PatientValidationController;
+use App\Http\Controllers\api\v1\AppointmentSystem\AvailableCitiesController;
+use App\Http\Controllers\api\v1\AppointmentSystem\AvailableDoctorsController;
+use App\Http\Controllers\api\v1\AppointmentSystem\AvailableSpecialiesController;
+use App\Http\Controllers\api\v1\AppointmentSystem\ScheduleAppointmentsController;
 
 /*
 |--------------------------------------------------------------------------

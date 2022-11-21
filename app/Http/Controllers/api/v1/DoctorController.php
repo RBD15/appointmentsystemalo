@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\v1;
 
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DoctorController extends Controller
 {

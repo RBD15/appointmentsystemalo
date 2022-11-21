@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\AppointmentSystem;
+namespace App\Http\Controllers\api\v1\AppointmentSystem;
 
 use App\Events\SetAppointment;
 use App\Models\Patient;
@@ -47,6 +47,7 @@ class ScheduleAppointmentsController extends Controller
                 Event(new SetAppointment($patient,$appointment));
                 return response()->json($appointment->only('id','date','city','doctor'),200);
             }
+            return response()->json(['message'=>'No es posible agendar la cita seleccionada'],500);
     }
 
     public function generateAvailableAppointments(Request $request){

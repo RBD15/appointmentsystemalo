@@ -42,6 +42,18 @@ class SheduleAppointmentsTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_bad_get_available_appointments_request(){
+        $data=[
+            "contrato"=>null,
+            "doctor_id"=>null,
+            "speciality_id"=>1,
+            "city_id"=>3  
+        ];
+        $response=$this->post('/api/v1/appointment-system/get-available-appointments',$data,["Accept"=>"application/json"]);
+        $response->assertJsonStructure(['message','errors'=>["contrato"]],$response->getOriginalContent());
+        $response->assertHeader('Content-Type','application/json');
+        $response->assertStatus(422);
+    }
     public function test_set_appointments()
     {
         $city=City::factory(10)->create()->first();
