@@ -40,6 +40,9 @@ Route::post('/v1/appointment-system/validate-patient',[PatientValidationControll
 Route::post('/v1/appointment-system/generate-available-appointments',[ScheduleAppointmentsController::class,'generateAvailableAppointments']);
 Route::post('/v1/appointment-system/get-available-appointments',[ScheduleAppointmentsController::class,'getAvailableAppointments']);
 Route::post('/v1/appointment-system/set-appointment',[ScheduleAppointmentsController::class,'setAppointments']);
+Route::post('/v1/appointment-system/get-patient-appointments',[ScheduleAppointmentsController::class,'getPatientAppointments']);
+Route::post('/v1/appointment-system/delete-patient-appointments',[ScheduleAppointmentsController::class,'deletePatientAppointments']);
 Route::post('/v1/appointment-system/get-available-speciality',[AvailableSpecialiesController::class,'getSpecialities']);
 Route::post('/v1/appointment-system/get-available-city',[AvailableCitiesController::class,'getCities']);
 Route::post('/v1/appointment-system/get-available-doctor',[AvailableDoctorsController::class,'getDoctors']);
+

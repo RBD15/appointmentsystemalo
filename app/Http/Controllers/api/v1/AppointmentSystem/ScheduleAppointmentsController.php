@@ -57,4 +57,21 @@ class ScheduleAppointmentsController extends Controller
         $appointments=Appointment::factory(100)->create(['patient_id'=>1]);
         return response()->json($appointments,200);
     }
+
+    public function getPatientAppointments(Request $request){
+        if(Patient::find($request->patient_id)==null)
+            return response()->json(["message"=>"Bad request"],500);
+        $appointments=Patient::find($request->patient_id)->appointments;
+        return response()->json($appointments,200);
+    }
+
+    public function deletePatientAppointments(Request $request){
+        $appointment=Appointment::find($request->appointment_id);
+        if($request->patient_id==$appointment->patient_id && $appointment!=null){
+            $appointment->delete();
+            return response()->json($appointment,200);
+        }
+
+        return response()->json(['message'=>'No es posible cancelar la cita'],500);
+    }
 }

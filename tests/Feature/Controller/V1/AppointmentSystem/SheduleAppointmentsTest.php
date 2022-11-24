@@ -102,4 +102,52 @@ class SheduleAppointmentsTest extends TestCase
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
     }
+
+
+    public function test_patients_appoitnments(){
+        $city=City::factory(10)->create()->first();
+        $speciality= Speciality::factory(10)->create()->first();
+        $plan=Plan::factory(10)->create()->first();
+        $doctor=Doctor::factory(10)->create()->first();
+        $patient=Patient::factory(10)->create()->first();
+
+        //set Patient's appointments
+        $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2])->first();
+
+        $data=[
+            'patient_id'=>2,
+        ]; 
+
+        $response=$this->post('/api/v1/appointment-system/get-patient-appointments',$data);
+        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection",$response->getOriginalContent());
+        $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent()[0]);
+        $response->assertHeader('Content-Type','application/json');
+        $response->assertStatus(200);
+        }
+
+    public function test_delete_patient_appoitnment(){
+        $city=City::factory(10)->create()->first();
+        $speciality= Speciality::factory(10)->create()->first();
+        $plan=Plan::factory(10)->create()->first();
+        $doctor=Doctor::factory(10)->create()->first();
+        $patient=Patient::factory(10)->create()->first();
+
+        //set Patient's appointments
+        $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
+        $appointment1 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2])->first();
+        $appointment2 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2])->first();
+
+        $data=[
+            'patient_id'=>$appointment2->patient_id,
+            'appointment_id'=>$appointment2->id
+        ]; 
+
+        $response=$this->post('/api/v1/appointment-system/delete-patient-appointments',$data);
+        $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent());
+        $this->assertDatabaseMissing('appointments',$appointment2->toArray());
+        $response->assertHeader('Content-Type','application/json');
+        $response->assertStatus(200);
+    }
 }
