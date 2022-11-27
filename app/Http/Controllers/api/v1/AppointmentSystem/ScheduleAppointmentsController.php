@@ -59,17 +59,21 @@ class ScheduleAppointmentsController extends Controller
     }
 
     public function getPatientAppointments(Request $request){
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->getTimestamp());
         if(Patient::find($request->patient_id)==null)
             return response()->json(["message"=>"Bad request"],500);
-        $appointments=Patient::find($request->patient_id)->appointments;
+        $appointments=Patient::find($request->patient_id)->appointments()->where([['date','>',$currentDate]])->get();
         return response()->json($appointments,200);
     }
 
     public function deletePatientAppointments(Request $request){
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->getTimestamp());
         $appointment=Appointment::find($request->appointment_id);
-        if($request->patient_id==$appointment->patient_id && $appointment!=null){
-            $appointment->delete();
-            return response()->json($appointment,200);
+        if($appointment->date>$currentDate){
+            if($request->patient_id==$appointment->patient_id && $appointment!=null){
+                $appointment->delete();
+                return response()->json($appointment,200);
+            }
         }
 
         return response()->json(['message'=>'No es posible cancelar la cita'],500);
