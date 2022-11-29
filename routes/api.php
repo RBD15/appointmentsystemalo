@@ -14,27 +14,61 @@ use App\Http\Controllers\api\v1\AppointmentSystem\AvailableDoctorsController;
 use App\Http\Controllers\api\v1\AppointmentSystem\AvailableSpecialiesController;
 use App\Http\Controllers\api\v1\AppointmentSystem\ScheduleAppointmentsController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/v1/city',CityController::class);
-Route::apiResource('/v1/speciality',SpecialityController::class);
-Route::apiResource('/v1/plan',PlanController::class);
-Route::apiResource('/v1/doctor',DoctorController::class);
-Route::apiResource('/v1/patient',PatientController::class);
-Route::apiResource('/v1/appointment',AppointmentController::class);
+
+// "appointment_api.index",
+// "appointment_api.store",
+// "appointment_api.show",
+// "appointment_api.update",
+// "appointment_api.destroy",   
+
+Route::apiResource('/v1/city',CityController::class)->names([
+    "index"=>"city_api.index",
+    "store"=>"city_api.store",
+    "show"=>"city_api.show",
+    "update"=>"city_api.update",
+    "destroy"=>"city_api.destroy"
+]);
+Route::apiResource('/v1/speciality',SpecialityController::class)->names([
+    "index"=>"speciality_api.index",
+    "store"=>"speciality_api.store",
+    "show"=>"speciality_api.show",
+    "update"=>"speciality_api.update",
+    "destroy"=>"speciality_api.destroy" 
+]);
+Route::apiResource('/v1/plan',PlanController::class)->names([
+    "index"=>"plan_api.index",
+    "store"=>"plan_api.store",
+    "show"=>"plan_api.show",
+    "update"=>"plan_api.update",
+    "destroy"=>"plan_api.destroy"
+]);
+Route::apiResource('/v1/doctor',DoctorController::class)->names([
+    "index"=>"doctor_api.index",
+    "store"=>"doctor_api.store",
+    "show"=>"doctor_api.show",
+    "update"=>"doctor_api.update",
+    "destroy"=>"doctor_api.destroy" 
+]);
+Route::apiResource('/v1/patient',PatientController::class)->names([
+    "index"=>"patient_api.index",
+    "store"=>"patient_api.store",
+    "show"=>"patient_api.show",
+    "update"=>"patient_api.update",
+    "destroy"=>"patient_api.destroy" 
+]);
+Route::apiResource('/v1/appointment',AppointmentController::class)->names([
+    "index"=>"appointment_api.index",
+    "store"=>"appointment_api.store",
+    "show"=>"appointment_api.show",
+    "update"=>"appointment_api.update",
+    "destroy"=>"appointment_api.destroy"
+]);
+
 
 Route::post('/v1/appointment-system/validate-patient',[PatientValidationController::class,'validationUser']);
 Route::post('/v1/appointment-system/generate-available-appointments',[ScheduleAppointmentsController::class,'generateAvailableAppointments']);
