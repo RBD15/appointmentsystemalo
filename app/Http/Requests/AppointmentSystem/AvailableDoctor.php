@@ -26,7 +26,7 @@ class AvailableDoctor extends FormRequest
         return [
             'contrato'=>'required|integer',
             'speciality_id'=>'required|integer',
-            'city_id'=>'required|integer'
+            'city_id'=>'integer|nullable'
         ];
     }
 }
