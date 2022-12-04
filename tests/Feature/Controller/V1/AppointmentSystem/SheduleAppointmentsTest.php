@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Controller\V1\AppointmentSystem;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\City;
 use App\Models\Plan;
@@ -17,6 +18,8 @@ class SheduleAppointmentsTest extends TestCase
     use RefreshDatabase;
 
     public function test_get_available_appointments(){
+        $offset=3;
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp()); 
         $city=City::factory(5)->create()->first();
         $speciality= Speciality::factory(5)->create()->first();
         $plan=Plan::factory(4)->create()->first();
@@ -26,11 +29,12 @@ class SheduleAppointmentsTest extends TestCase
 
         //A set relationship
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>3,'patient_id'=>1])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>3,'patient_id'=>1,'date'=>$currentDate])->first();
+        $appointment2 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>3,'patient_id'=>1,'date'=>$currentDate])->first();
 
         $data=[
             "contrato"=>$patient->id,
-            "doctor_id"=>null,
+            "doctor_id"=>$doctor->id,
             "speciality_id"=>1,
             "city_id"=>3  
         ];
@@ -128,6 +132,8 @@ class SheduleAppointmentsTest extends TestCase
         }
 
     public function test_delete_patient_appoitnment(){
+        $offset=3;
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());        
         $city=City::factory(10)->create()->first();
         $speciality= Speciality::factory(10)->create()->first();
         $plan=Plan::factory(10)->create()->first();
@@ -136,8 +142,8 @@ class SheduleAppointmentsTest extends TestCase
 
         //set Patient's appointments
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-        $appointment1 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2])->first();
-        $appointment2 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2])->first();
+        $appointment1 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2,'date'=>$currentDate])->first();
+        $appointment2 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2,'date'=>$currentDate])->first();
 
         $data=[
             'patient_id'=>$appointment2->patient_id,

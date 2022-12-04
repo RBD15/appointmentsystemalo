@@ -25,9 +25,9 @@ class GetAvailableRequest extends FormRequest
     {
         return [
             'contrato'=>'required|integer',
-            'speciality_id'=>'integer|nullable',
-            'city_id'=>'integer|nullable',
-            'doctor_id'=>'integer|nullable'
+            'speciality_id'=>'required|integer',
+            'city_id'=>'nullable|integer',
+            'doctor_id'=>'nullable|integer'
         ];
     }
 }
