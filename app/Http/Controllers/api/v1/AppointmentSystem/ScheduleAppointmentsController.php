@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentSystem\Schedule\GetAvailableRequest;
 use App\Http\Requests\AppointmentSystem\Schedule\SetAppointmentRequest;
 use App\Http\Resources\AvailableAppointmentsResource;
+use App\Http\Resources\ScheduledAppointments;
 use Carbon\Carbon;
 
 class ScheduleAppointmentsController extends Controller
@@ -69,7 +70,7 @@ class ScheduleAppointmentsController extends Controller
         $currentDate=date('Y-m-d H:s:i',Carbon::now()->getTimestamp());
         if(Patient::find($request->patient_id)==null)
             return response()->json(["message"=>"Bad request"],500);
-        $appointments=Patient::find($request->patient_id)->appointments()->where([['date','>',$currentDate]])->get();
+        $appointments=ScheduledAppointments::collection(Patient::find($request->patient_id)->appointments()->where([['date','>',$currentDate]])->get());
         return response()->json($appointments,200);
     }
 
