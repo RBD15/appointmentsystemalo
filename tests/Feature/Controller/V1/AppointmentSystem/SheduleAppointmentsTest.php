@@ -109,6 +109,8 @@ class SheduleAppointmentsTest extends TestCase
 
 
     public function test_patients_appoitnments(){
+        $offset=3;
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp()); 
         $city=City::factory(10)->create()->first();
         $speciality= Speciality::factory(10)->create()->first();
         $plan=Plan::factory(10)->create()->first();
@@ -117,16 +119,17 @@ class SheduleAppointmentsTest extends TestCase
 
         //set Patient's appointments
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2])->first();
-        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2,'date'=>$currentDate])->first();
+        $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2,'date'=>$currentDate])->first();
 
         $data=[
             'patient_id'=>2,
         ]; 
 
         $response=$this->post('/api/v1/appointment-system/get-patient-appointments',$data);
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection",$response->getOriginalContent());
-        $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent()[0]);
+        $this->assertInstanceOf("Illuminate\Http\Resources\Json\AnonymousResourceCollection",$response->getOriginalContent());
+        $response->assertJsonStructure(['id','patient','city','doctor','speciality','date'],$response->getOriginalContent()[0]->toArray(null));
+        $this->assertInstanceOf("App\Http\Resources\ScheduledAppointments",$response->getOriginalContent()[0]);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
         }
