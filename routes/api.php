@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\CityController;
@@ -19,13 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-// "appointment_api.index",
-// "appointment_api.store",
-// "appointment_api.show",
-// "appointment_api.update",
-// "appointment_api.destroy",   
-
+//V1
 Route::apiResource('/v1/city',CityController::class)->names([
     "index"=>"city_api.index",
     "store"=>"city_api.store",
@@ -80,3 +75,5 @@ Route::post('/v1/appointment-system/get-available-speciality',[AvailableSpeciali
 Route::post('/v1/appointment-system/get-available-city',[AvailableCitiesController::class,'getCities']);
 Route::post('/v1/appointment-system/get-available-doctor',[AvailableDoctorsController::class,'getDoctors']);
 
+Route::post('authenticate',[LoginController::class,'login']);
+Route::post('/v2/appointment-system/get-available-speciality',[AvailableSpecialiesController::class,'getSpecialities'])->middleware('auth:sanctum');
