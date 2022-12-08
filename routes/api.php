@@ -15,6 +15,9 @@ use App\Http\Controllers\api\v1\AppointmentSystem\AvailableDoctorsController;
 use App\Http\Controllers\api\v1\AppointmentSystem\AvailableSpecialiesController;
 use App\Http\Controllers\api\v1\AppointmentSystem\ScheduleAppointmentsController;
 
+use App\Http\Controllers\api\v2\AppointmentSystem\PatientValidationController as PatientValidationControllerV2;
+use App\Http\Controllers\api\v2\AppointmentSystem\AvailableSpecialitiesController as AvailableSpecialiesControllerV2;
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -76,4 +79,5 @@ Route::post('/v1/appointment-system/get-available-city',[AvailableCitiesControll
 Route::post('/v1/appointment-system/get-available-doctor',[AvailableDoctorsController::class,'getDoctors']);
 
 Route::post('authenticate',[LoginController::class,'login']);
-Route::post('/v2/appointment-system/get-available-speciality',[AvailableSpecialiesController::class,'getSpecialities'])->middleware('auth:sanctum');
+Route::post('/v2/appointment-system/validate-patient',[PatientValidationControllerV2::class,'validationUser'])->name('validate-patient-v2')->middleware('auth:sanctum');
+Route::post('/v2/appointment-system/get-available-speciality',[AvailableSpecialiesControllerV2::class,'getSpecialities'])->name('get-specialties-v2')->middleware('auth:sanctum');
