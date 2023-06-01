@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V2\AppointmentSystem;
+namespace Tests\Feature\Controller\api\V2\AppointmentSystem;
 
 use Tests\TestCase;
 use App\Models\City;
@@ -33,7 +33,7 @@ class AvailableCitiesControllerTest extends TestCase
         // $data=[
         //     'contrato'=>1,
         //     'speciality_id'=>1
-        // ];   
+        // ];
         // $response = $this->post('/api/v1/appointment-system/get-available-city/',$data);
         // $response->assertJsonStructure(['id','nombre','direccion'],$response->getOriginalContent()[0]);
         // $response->assertHeader('Content-Type','application/json');

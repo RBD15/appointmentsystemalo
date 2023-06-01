@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\BackOffice\v1;
 
 use App\Models\Plan;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class PlanController extends Controller
 
 
     public function store(Request $request)
-    {        
+    {
         $token = csrf_token();
         $plan= new Plan;
         $plan->name=$request->name;
@@ -38,7 +38,7 @@ class PlanController extends Controller
         $result=array();
         $plans=Schema::getColumnListing('plans');
         $types=DB::select('describe plans');
-        for ($i=0; $i <count($types); $i++) { 
+        for ($i=0; $i <count($types); $i++) {
             if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
                 array_push($result,array("name"=>$plans[$i],"type"=>$this->checkColumnType($types[$i])));
         };
@@ -59,7 +59,7 @@ class PlanController extends Controller
 
     public function show(Plan $plan)
     {
-        $token = csrf_token();       
+        $token = csrf_token();
         $plan=Plan::find($plan->id);
         $plans=Plan::all();
         return view('pages.dashboard',['route'=>'/plan','token'=>$token,'values'=>$plans]);    }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V1;
+namespace Tests\Feature\Controller\BackOffice\V1;
 
 use App\Models\Appointment;
 use Tests\TestCase;
@@ -49,7 +49,7 @@ class AppointmentTest extends TestCase
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
         $response->assertJsonStructure(['patient_id','city_id','doctor_id','date'],$response->getOriginalContent()[1]);
-        
+
     }
 
     public function test_show()

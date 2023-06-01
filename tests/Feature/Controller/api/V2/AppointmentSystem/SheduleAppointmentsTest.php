@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V2\AppointmentSystem;
+namespace Tests\Feature\Controller\api\V2\AppointmentSystem;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -19,7 +19,7 @@ class SheduleAppointmentsTest extends TestCase
 
     // public function test_get_available_appointments(){
     //     $offset=3;
-    //     $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp()); 
+    //     $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
     //     $city=City::factory(5)->create()->first();
     //     $speciality= Speciality::factory(5)->create()->first();
     //     $plan=Plan::factory(4)->create()->first();
@@ -36,7 +36,7 @@ class SheduleAppointmentsTest extends TestCase
     //         "contrato"=>$patient->id,
     //         "doctor_id"=>$doctor->id,
     //         "speciality_id"=>1,
-    //         "city_id"=>3  
+    //         "city_id"=>3
     //     ];
     //     $response=$this->post('/api/v1/appointment-system/get-available-appointments',$data);
     //     $this->assertInstanceOf("Illuminate\Http\Resources\Json\AnonymousResourceCollection",$response->getOriginalContent());
@@ -51,7 +51,7 @@ class SheduleAppointmentsTest extends TestCase
     //         "contrato"=>null,
     //         "doctor_id"=>null,
     //         "speciality_id"=>1,
-    //         "city_id"=>3  
+    //         "city_id"=>3
     //     ];
     //     $response=$this->post('/api/v1/appointment-system/get-available-appointments',$data,["Accept"=>"application/json"]);
     //     $response->assertJsonStructure(['message','errors'=>["contrato"]],$response->getOriginalContent());
@@ -74,7 +74,7 @@ class SheduleAppointmentsTest extends TestCase
     //     $data=[
     //         'contrato'=>2,
     //         'appointment_id'=>$appointment->id
-    //     ];   
+    //     ];
 
     //     $result=[
     //         'id'=>$appointment->id,
@@ -110,7 +110,7 @@ class SheduleAppointmentsTest extends TestCase
 
     // public function test_patients_appoitnments(){
     //     $offset=3;
-    //     $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp()); 
+    //     $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
     //     $city=City::factory(10)->create()->first();
     //     $speciality= Speciality::factory(10)->create()->first();
     //     $plan=Plan::factory(10)->create()->first();
@@ -124,7 +124,7 @@ class SheduleAppointmentsTest extends TestCase
 
     //     $data=[
     //         'patient_id'=>2,
-    //     ]; 
+    //     ];
 
     //     $response=$this->post('/api/v1/appointment-system/get-patient-appointments',$data);
     //     $this->assertInstanceOf("Illuminate\Http\Resources\Json\AnonymousResourceCollection",$response->getOriginalContent());
@@ -136,7 +136,7 @@ class SheduleAppointmentsTest extends TestCase
 
     // public function test_delete_patient_appoitnment(){
     //     $offset=3;
-    //     $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());        
+    //     $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
     //     $city=City::factory(10)->create()->first();
     //     $speciality= Speciality::factory(10)->create()->first();
     //     $plan=Plan::factory(10)->create()->first();
@@ -151,7 +151,7 @@ class SheduleAppointmentsTest extends TestCase
     //     $data=[
     //         'patient_id'=>$appointment2->patient_id,
     //         'appointment_id'=>$appointment2->id
-    //     ]; 
+    //     ];
 
     //     $response=$this->post('/api/v1/appointment-system/delete-patient-appointments',$data);
     //     $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent());
@@ -160,5 +160,5 @@ class SheduleAppointmentsTest extends TestCase
     //     $response->assertStatus(200);
     // }
 
-    
+
 }

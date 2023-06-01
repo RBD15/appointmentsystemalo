@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\BackOffice\v1;
 
 use App\Models\Doctor;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class DoctorController extends Controller
         $result=array();
         $doctors=Schema::getColumnListing('doctors');
         $types=DB::select('describe doctors');
-        for ($i=0; $i <count($types); $i++) { 
+        for ($i=0; $i <count($types); $i++) {
             if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
                 array_push($result,array("name"=>$doctors[$i],"type"=>$this->checkColumnType($types[$i])));
         };

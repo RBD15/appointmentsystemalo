@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\BackOffice\v1;
 
 use App\Models\City;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class CityController extends Controller
         $result=array();
         $cities=Schema::getColumnListing('cities');
         $types=DB::select('describe cities');
-        for ($i=0; $i <count($types); $i++) { 
+        for ($i=0; $i <count($types); $i++) {
             if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
                 array_push($result,array("name"=>$cities[$i],"type"=>$this->checkColumnType($types[$i])));
         };
@@ -53,7 +53,7 @@ class CityController extends Controller
     }
 
     public function show(City $city)
-    {           
+    {
         $token = csrf_token();
         dd('show');
         $city=City::find($city->id);
@@ -67,7 +67,7 @@ class CityController extends Controller
         $result=array();
         $cities=Schema::getColumnListing('cities');
         $types=DB::select('describe cities');
-        for ($i=0; $i <count($types); $i++) { 
+        for ($i=0; $i <count($types); $i++) {
             if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
                 array_push($result,array("name"=>$cities[$i],"type"=>$this->checkColumnType($types[$i])));
         };
@@ -84,7 +84,7 @@ class CityController extends Controller
     }
 
     public function destroy(City $city)
-    {           
+    {
         $token = csrf_token();
         $city=City::find($city->id);
         $city->delete();

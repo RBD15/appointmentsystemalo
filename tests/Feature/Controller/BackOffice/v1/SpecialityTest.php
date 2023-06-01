@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V1;
+namespace Tests\Feature\Controller\BackOffice\V1;
 
 use Tests\TestCase;
 use App\Models\Plan;
@@ -49,7 +49,7 @@ class SpecialityTest extends TestCase
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
         $response->assertJsonStructure(['name','description'],$response->getOriginalContent()[1]);
-        
+
     }
 
     public function test_show()

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\BackOffice\v1;
 
 use App\Models\Patient;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class PatientController extends Controller
         $result=array();
         $patients=Schema::getColumnListing('patients');
         $types=DB::select('describe patients');
-        for ($i=0; $i <count($types); $i++) { 
+        for ($i=0; $i <count($types); $i++) {
             if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
                 array_push($result,array("name"=>$patients[$i],"type"=>$this->checkColumnType($types[$i])));
         };
@@ -49,6 +49,21 @@ class PatientController extends Controller
             $result='text';
 
         return $result;
+    }
+
+    public function edit(Patient $patient){
+        // dd($patient);
+        $token = csrf_token();
+        $result=array();
+        $cities=Schema::getColumnListing('patients');
+        $types=DB::select('describe patients');
+        for ($i=0; $i <count($types); $i++) {
+            if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
+                array_push($result,array("name"=>$cities[$i],"type"=>$this->checkColumnType($types[$i])));
+        };
+        $fields=json_encode($result,FALSE);
+        return view('pages.edit',['params'=>json_encode(['csrf'=>$token,'route'=>'/patient'],FALSE),'fields'=>$fields,'model'=>json_encode($patient)]);
+
     }
 
     public function show(Patient $patient)

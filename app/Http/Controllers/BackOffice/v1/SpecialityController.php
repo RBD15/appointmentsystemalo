@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\BackOffice\v1;
 
 use App\Models\Speciality;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class SpecialityController extends Controller
         $result=array();
         $specialities=Schema::getColumnListing('specialities');
         $types=DB::select('describe specialities');
-        for ($i=0; $i <count($types); $i++) { 
+        for ($i=0; $i <count($types); $i++) {
             if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
                 array_push($result,array("name"=>$specialities[$i],"type"=>$this->checkColumnType($types[$i])));
         };

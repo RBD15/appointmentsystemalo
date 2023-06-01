@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V1\AppointmentSystem;
+namespace Tests\Feature\Controller\api\V1\AppointmentSystem;
 
 use Tests\TestCase;
 use App\Models\Plan;

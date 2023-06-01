@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V1\AppointmentSystem;
+namespace Tests\Feature\Controller\api\V1\AppointmentSystem;
 
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -17,15 +17,27 @@ class SheduleAppointmentsTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $_city;
+    private $_speciality;
+    private $_appointment;
+    private $_plan;
+    private $_doctor;
+    private $_patient;
+
+    function setUp():void
+    {
+        parent::setUp();
+        $this->_city=City::factory(5)->create()->first();
+        $this->_speciality=Speciality::factory(5)->create()->first();
+        $this->_plan=Plan::factory(4)->create()->first();
+        $this->_doctor=Doctor::factory(20)->create()->first();
+        $this->_patient=Patient::factory(10)->create()->first();;
+        $this->_appointment=Appointment::factory(200)->create()->first();
+    }
+
     public function test_get_available_appointments(){
         $offset=3;
-        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp()); 
-        $city=City::factory(5)->create()->first();
-        $speciality= Speciality::factory(5)->create()->first();
-        $plan=Plan::factory(4)->create()->first();
-        $doctor=Doctor::factory(20)->create()->first();
-        $patient=Patient::factory(10)->create()->first();
-        $appointment = Appointment::factory(200)->create()->first();
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
 
         //A set relationship
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
@@ -33,10 +45,10 @@ class SheduleAppointmentsTest extends TestCase
         $appointment2 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>3,'patient_id'=>1,'date'=>$currentDate])->first();
 
         $data=[
-            "contrato"=>$patient->id,
+            "contrato"=>$this->_patient->id,
             "doctor_id"=>$doctor->id,
             "speciality_id"=>1,
-            "city_id"=>3  
+            "city_id"=>3
         ];
         $response=$this->post('/api/v1/appointment-system/get-available-appointments',$data);
         $this->assertInstanceOf("Illuminate\Http\Resources\Json\AnonymousResourceCollection",$response->getOriginalContent());
@@ -51,7 +63,7 @@ class SheduleAppointmentsTest extends TestCase
             "contrato"=>null,
             "doctor_id"=>null,
             "speciality_id"=>1,
-            "city_id"=>3  
+            "city_id"=>3
         ];
         $response=$this->post('/api/v1/appointment-system/get-available-appointments',$data,["Accept"=>"application/json"]);
         $response->assertJsonStructure(['message','errors'=>["contrato"]],$response->getOriginalContent());
@@ -60,13 +72,6 @@ class SheduleAppointmentsTest extends TestCase
     }
     public function test_set_appointments()
     {
-        $city=City::factory(10)->create()->first();
-        $speciality= Speciality::factory(10)->create()->first();
-        $plan=Plan::factory(10)->create()->first();
-        $doctor=Doctor::factory(10)->create()->first();
-        $patient=Patient::factory(10)->create()->first();
-        Appointment::factory(100)->create();
-
         //A set relationship
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
         $appointment = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>1])->first();
@@ -74,7 +79,7 @@ class SheduleAppointmentsTest extends TestCase
         $data=[
             'contrato'=>2,
             'appointment_id'=>$appointment->id
-        ];   
+        ];
 
         $result=[
             'id'=>$appointment->id,
@@ -91,11 +96,6 @@ class SheduleAppointmentsTest extends TestCase
     }
 
     public function test_create_appointments(){
-        $city=City::factory(5)->create()->first();
-        $speciality= Speciality::factory(5)->create()->first();
-        $plan=Plan::factory(4)->create()->first();
-        $doctor=Doctor::factory(20)->create()->first();
-        $patient=Patient::factory(10)->create()->first();
 
         $appointments = Appointment::factory(20)->create(['patient_id'=>1]);
 
@@ -110,12 +110,7 @@ class SheduleAppointmentsTest extends TestCase
 
     public function test_patients_appoitnments(){
         $offset=3;
-        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp()); 
-        $city=City::factory(10)->create()->first();
-        $speciality= Speciality::factory(10)->create()->first();
-        $plan=Plan::factory(10)->create()->first();
-        $doctor=Doctor::factory(10)->create()->first();
-        $patient=Patient::factory(10)->create()->first();
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
 
         //set Patient's appointments
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
@@ -124,7 +119,7 @@ class SheduleAppointmentsTest extends TestCase
 
         $data=[
             'patient_id'=>2,
-        ]; 
+        ];
 
         $response=$this->post('/api/v1/appointment-system/get-patient-appointments',$data);
         $this->assertInstanceOf("Illuminate\Http\Resources\Json\AnonymousResourceCollection",$response->getOriginalContent());
@@ -136,12 +131,7 @@ class SheduleAppointmentsTest extends TestCase
 
     public function test_delete_patient_appoitnment(){
         $offset=3;
-        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());        
-        $city=City::factory(10)->create()->first();
-        $speciality= Speciality::factory(10)->create()->first();
-        $plan=Plan::factory(10)->create()->first();
-        $doctor=Doctor::factory(10)->create()->first();
-        $patient=Patient::factory(10)->create()->first();
+        $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
 
         //set Patient's appointments
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
@@ -151,7 +141,7 @@ class SheduleAppointmentsTest extends TestCase
         $data=[
             'patient_id'=>$appointment2->patient_id,
             'appointment_id'=>$appointment2->id
-        ]; 
+        ];
 
         $response=$this->post('/api/v1/appointment-system/delete-patient-appointments',$data);
         $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent());

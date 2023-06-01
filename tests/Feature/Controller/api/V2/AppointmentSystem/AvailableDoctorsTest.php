@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V2\AppointmentSystem;
+namespace Tests\Feature\Controller\api\V2\AppointmentSystem;
 
 use Tests\TestCase;
 use App\Models\City;
@@ -33,7 +33,7 @@ class AvailableDoctorsTest extends TestCase
     //         'contrato'=>1,
     //         'speciality_id'=>1,
     //         'city_id'=>1
-    //     ];   
+    //     ];
     //     $response = $this->post('/api/v1/appointment-system/get-available-doctor/',$data);
     //     $this->assertInstanceOf('Illuminate\Http\Resources\Json\AnonymousResourceCollection',$response->getOriginalContent());
     //     $this->assertInstanceOf('App\Http\Resources\AvailableDoctor',$response->getOriginalContent()[0]);

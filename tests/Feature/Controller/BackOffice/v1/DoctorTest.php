@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V1;
+namespace Tests\Feature\Controller\BackOffice\V1;
 
 use Tests\TestCase;
 use App\Models\Doctor;

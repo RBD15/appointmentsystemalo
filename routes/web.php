@@ -7,11 +7,12 @@ use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\v1\CityController;
-use App\Http\Controllers\v1\PlanController;
-use App\Http\Controllers\v1\DoctorController;
-use App\Http\Controllers\v1\PatientController;
-use App\Http\Controllers\v1\SpecialityController;
+use App\Http\Controllers\BackOffice\v1\CityController;
+use App\Http\Controllers\BackOffice\v1\PlanController;
+use App\Http\Controllers\BackOffice\v1\PatientController;
+use App\Http\Controllers\BackOffice\v1\SpecialityController;
+use App\Http\Controllers\BackOffice\v1\DoctorController;
+
 
 Auth::routes();
 Route::get('/home', function () {

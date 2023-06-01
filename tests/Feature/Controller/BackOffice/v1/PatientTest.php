@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controller\V1;
+namespace Tests\Feature\Controller\BackOffice\V1;
 
 use Tests\TestCase;
 use App\Models\Plan;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PatientTest extends TestCase
 {
-    
+
     use RefreshDatabase;
 
     public function test_store()
