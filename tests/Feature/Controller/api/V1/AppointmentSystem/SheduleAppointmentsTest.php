@@ -130,12 +130,11 @@ class SheduleAppointmentsTest extends TestCase
         }
 
     public function test_delete_patient_appoitnment(){
-        $offset=3;
+        $offset=2;
         $currentDate=date('Y-m-d H:s:i',Carbon::now()->addHours($offset)->getTimestamp());
 
         //set Patient's appointments
         $doctor=Doctor::factory(1)->create(['speciality_id'=>1])->first();
-        $appointment1 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>1,'patient_id'=>2,'date'=>$currentDate])->first();
         $appointment2 = Appointment::factory(1)->create(['doctor_id'=>$doctor->id,'city_id'=>2,'patient_id'=>2,'date'=>$currentDate])->first();
 
         $data=[
@@ -144,8 +143,7 @@ class SheduleAppointmentsTest extends TestCase
         ];
 
         $response=$this->post('/api/v1/appointment-system/delete-patient-appointments',$data);
-        $this->assertInstanceOf("App\Models\Appointment",$response->getOriginalContent());
-        $this->assertDatabaseMissing('appointments',$appointment2->toArray());
+        $this->assertDatabaseHas('appointments',['id'=>$appointment2->id,'patient_id'=>1]);
         $response->assertHeader('Content-Type','application/json');
         $response->assertStatus(200);
     }
