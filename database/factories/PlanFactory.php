@@ -8,7 +8,7 @@ class PlanFactory extends Factory
 {
     public function definition()
     {
-        $planes=['Basico','Individual','Familiar','Premium'];
+        $planes=['Basico','Individual','Familiar','Premium','Convenio'];
         $length=count($planes);
         $resultado=$planes[$this->faker->numberBetween(0,$length-1)];
         return [
