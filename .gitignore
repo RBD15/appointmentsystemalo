@@ -16,3 +16,4 @@ yarn-error.log
 /deployfolder
 .vercel
 vercel.json
+/resource-readme
