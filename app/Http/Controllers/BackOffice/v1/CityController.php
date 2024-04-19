@@ -55,14 +55,12 @@ class CityController extends Controller
     public function show(City $city)
     {
         $token = csrf_token();
-        dd('show');
         $city=City::find($city->id);
         $cities=City::all();
         return view('pages.dashboard',['route'=>'/city','token'=>$token,'values'=>$cities]);
     }
 
     public function edit(City $city){
-        // dd($city);
         $token = csrf_token();
         $result=array();
         $cities=Schema::getColumnListing('cities');
@@ -77,10 +75,14 @@ class CityController extends Controller
     }
 
     public function update(Request $request, City $city)
-    {   dd($city);
+    {
         $city=City::find($city->id);
         $city->update($request->all());
-        return response()->json($city,200);
+
+        $token = csrf_token();
+        return response()->json(["error"=>"false","data"=>""],200);
+        // $cities=City::all();
+        // return view('pages.dashboard',['route'=>'/city','token'=>$token,'values'=>$cities]);
     }
 
     public function destroy(City $city)
