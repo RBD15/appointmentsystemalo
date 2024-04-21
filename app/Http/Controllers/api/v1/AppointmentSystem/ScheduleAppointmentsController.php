@@ -18,7 +18,7 @@ use Carbon\Carbon;
 
 class ScheduleAppointmentsController extends Controller
 {
-
+    // TODO: Improve method, it take a long time to get available appointments
     public function getAvailableAppointments(GetAvailableRequest $request){
 
         $offset=2;
