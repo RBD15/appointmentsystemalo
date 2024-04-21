@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentSystem\AvailableCities;
 use App\Http\Resources\AvailableCity;
+use App\Models\AppointmentSystem\AvailableAppointment;
 
 class AvailableCitiesController extends Controller
 {
@@ -19,7 +20,9 @@ class AvailableCitiesController extends Controller
             foreach ($specialityArray as $key => $value) {
                 array_push($doctorsID,$value['id']);
             }
-            $availableAppointmentsaArray=Appointment::whereIn('doctor_id',$doctorsID)->where('patient_id',1)->get()->pluck('city')->toArray();
+
+            $currentDate = date('Y-m-d H:i:s');
+            $availableAppointmentsaArray=Appointment::whereIn('doctor_id',$doctorsID)->where('patient_id',1)->where('date','>',$currentDate)->get()->pluck('city')->toArray();
             $citiesId=array();
             foreach ($availableAppointmentsaArray as $key => $value) {
                 if(array_search($value['id'],$citiesId)===false){

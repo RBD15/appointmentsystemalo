@@ -1,51 +1,76 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-function Edit(props) {
-    let params=JSON.parse(props.params)
-    let model=JSON.parse(props.model)
-    let fields=JSON.parse(props.fields)
-    let route=params.route
-    const form = useRef()
-    const sendAction=(event,model)=>{
-        event.preventDefault()
-        let url=window.location.hostname
-        console.log(url)
-        console.log(form)
+function Edit({model,params,fields}) {
 
-        // if(url=='localhost'){
-        //     url = window.location.protocol+'//'+window.location.hostname+':'+window.location.port+route
-        // }
-        // const data={
-        //     mode:'cors',
-        //     method:'PUT',
-        //     headers:{
-        //         Accept: 'application/json',
-        //         'Content-Type':'application/json',
-        //         'X-CSRF-TOKEN': token
-        //     },
-        //     body:{} 
-        // }
-        // fetch('http://localhost:8000'+route+'/'+model.id,data).then(
-        //     res=>window.location.href=url
-        // ).catch(err=>console.error(err))
+    model  = JSON.parse(model)
+    params = JSON.parse(params)
+    fields = JSON.parse(fields)
+
+    const [entityModel,setEntityModel] = useState(model)
+
+    let route=params.route
+    let url=window.location.hostname
+
+    if(url=='localhost'){
+        url = window.location.protocol+'//'+window.location.hostname+':'+window.location.port+route
+    }
+
+
+    const sendAction=(event)=>{
+        event.preventDefault()
+
+        let result = {}
+        fields.map((field) => {
+            result[field.name] = entityModel[field.name]
+            return result
+        })
+
+        const data={
+            mode:'cors',
+            method:'PUT',
+            headers:{
+                Accept: 'application/json',
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN': params.csrf
+            },
+            body:JSON.stringify({...result})
+        }
+
+        console.log('Endpoint',`http://localhost:8000${route}/${entityModel.id}`);
+        fetch('http://localhost:8000'+route+'/'+entityModel.id,data)
+        .then(res=>
+            res.json()
+        )
+        .then(res=>
+            window.location=url
+        )
+        .catch(err=>{
+            alert('City wasnt updated')
+            console.error(err)
+        })
+    }
+
+    const returnEntityDashboard = () => {
+        window.location=url
     }
 
     return (
         <div className="container" >
-            <form ref={form}>
+            <form>
                 {
-                    fields.map(field=>{
+                    fields.map((field,index)=>{
                         return (
                             <div className="mb-3" key={'campo'+field.name}>
                                 <label for={field.name} className="form-label">{field.name}</label>
-                                <input type={field.type} name={field.name} className="form-control" id={field.name} value={model[field.name]} aria-describedby="emailHelp"/>
+                                <input type={field.type} name={field.name} className="form-control" id={field.name} value={entityModel[field.name]} onChange={e => setEntityModel({...entityModel,[field.name]:e.target.value})} aria-describedby="emailHelp"/>
                             </div>
                         )
                     })
                 }
                 <input type="hidden" name="_token" value={params.csrf} />
-                <button  className="btn btn-primary" onClick={(e)=>sendAction(e,model)}>Edit</button>
+                <button  className="btn btn-primary" onClick={sendAction}>Edit</button>
+                <button  className="btn btn-success" onClick={returnEntityDashboard}>Volver</button>
             </form>
         </div>
     )

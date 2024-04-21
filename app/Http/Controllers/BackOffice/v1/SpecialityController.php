@@ -68,6 +68,20 @@ class SpecialityController extends Controller
         return response()->json($speciality,200);
     }
 
+    public function edit(Speciality $speciality){
+        $token = csrf_token();
+        $result=array();
+        $specialities=Schema::getColumnListing('specialities');
+        $types=DB::select('describe specialities');
+        for ($i=0; $i <count($types); $i++) {
+            if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
+                array_push($result,array("name"=>$specialities[$i],"type"=>$this->checkColumnType($types[$i])));
+        };
+        $fields=json_encode($result,FALSE);
+        return view('pages.edit',['params'=>json_encode(['csrf'=>$token,'route'=>'/speciality'],FALSE),'fields'=>$fields,'model'=>json_encode($speciality)]);
+
+    }
+
     public function destroy(Speciality $speciality,Request $request)
     {
         $token = csrf_token();

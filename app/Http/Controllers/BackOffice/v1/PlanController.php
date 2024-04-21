@@ -62,7 +62,22 @@ class PlanController extends Controller
         $token = csrf_token();
         $plan=Plan::find($plan->id);
         $plans=Plan::all();
-        return view('pages.dashboard',['route'=>'/plan','token'=>$token,'values'=>$plans]);    }
+        return view('pages.dashboard',['route'=>'/plan','token'=>$token,'values'=>$plans]);
+    }
+
+    public function edit(Plan $plan){
+        $token = csrf_token();
+        $result=array();
+        $plans=Schema::getColumnListing('plans');
+        $types=DB::select('describe plans');
+        for ($i=0; $i <count($types); $i++) {
+            if($types[$i]->Field!="id" && $types[$i]->Field!="created_at" && $types[$i]->Field!="updated_at")
+                array_push($result,array("name"=>$plans[$i],"type"=>$this->checkColumnType($types[$i])));
+        };
+        $fields=json_encode($result,FALSE);
+        return view('pages.edit',['params'=>json_encode(['csrf'=>$token,'route'=>'/plan'],FALSE),'fields'=>$fields,'model'=>json_encode($plan)]);
+
+    }
 
     public function update(Request $request, Plan $plan)
     {

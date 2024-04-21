@@ -9,6 +9,8 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Speciality;
 use App\Models\Appointment;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,10 +28,25 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(6)->create();
         City::factory(6)->create();
+
         Speciality::factory(5)->create();
         Plan::factory(5)->create();
+        $this->attachPivotTable(Plan::all(), Speciality::all());
+
         Doctor::factory(6)->create();
         Patient::factory(6)->create();
         Appointment::factory(100)->create();
     }
+
+    public function attachPivotTable(Collection $modelsA, Collection $modelsB): void
+    {   $cont = 1;
+        foreach($modelsA as $modelA){
+          echo $cont;
+          for ($i=0; $i < 2; $i++) {
+            $modelA->specialities()->sync($modelsB[random_int(0,count($modelsB)-1)]);
+          }
+          $cont++;
+        }
+    }
+
 }
